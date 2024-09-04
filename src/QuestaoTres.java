@@ -7,26 +7,25 @@ import org.w3c.dom.Element;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class QuestaoTres {
 
     public static void main(String[] args) {
 
         try {
 
-            File inputFile = new File("Faturamento.xml");
+            File inputFile = new File("dados.xml");
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document doc = builder.parse(inputFile);
             doc.getDocumentElement().normalize();
 
-            NodeList nodeList = doc.getElementsByTagName("dia");
+            NodeList nodeList = doc.getElementsByTagName("row");
 
             List<Double> valores = new ArrayList<>();
 
             for (int i = 0; i < nodeList.getLength(); i++) {
-                Element element = (Element) nodeList.item(i);
-                double valor = Double.parseDouble(element.getElementsByTagName("valor").item(0).getTextContent());
+                Element rowElement = (Element) nodeList.item(i);
+                double valor = Double.parseDouble(rowElement.getElementsByTagName("valor").item(0).getTextContent());
                 if (valor > 0.0) {
                     valores.add(valor);
                 }
@@ -46,7 +45,7 @@ public class QuestaoTres {
 
             System.out.println("Menor valor de faturamento ocorrido em um dia do mês: " + menorValor);
             System.out.println("Maior valor de faturamento ocorrido em um dia do mês: " + maiorValor);
-            System.out.println(media);
+            System.out.println("Média de faturamento diário: " + media);
             System.out.println("Número de dias no mês em que o valor de faturamento diário foi superior à média mensal: " + diasAcimaDaMedia);
 
         } catch (Exception e) {
